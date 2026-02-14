@@ -31,8 +31,7 @@
 
     .buttons {
       display: inline-flex;
-      gap: 12px; /* keeps No beside Yes */
-      position: relative;
+      gap: 12px;
     }
 
     button {
@@ -41,7 +40,6 @@
       border: none;
       border-radius: 12px;
       cursor: pointer;
-      transition: transform 0.2s ease;
     }
 
     #yesBtn {
@@ -49,14 +47,11 @@
       color: white;
     }
 
-    #yesBtn:hover {
-      transform: scale(1.15);
-    }
-
     #noBtn {
       background-color: white;
       color: #ff2e63;
-      position: relative; /* start beside Yes */
+      position: relative;
+      transition: left 0.4s ease, top 0.4s ease;
     }
 
     .message {
@@ -67,12 +62,18 @@
       animation: fadeIn 1s ease forwards;
     }
 
+    .gif {
+      margin-top: 20px;
+      width: 220px;
+      display: none;
+      border-radius: 12px;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Hearts */
     .heart {
       position: fixed;
       font-size: 24px;
@@ -81,14 +82,8 @@
     }
 
     @keyframes float {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-200px) scale(1.8);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-200px) scale(1.8); opacity: 0; }
     }
   </style>
 </head>
@@ -105,24 +100,30 @@
     <div class="message" id="loveMsg">
       Yaaay Iram! You just made me the happiest person alive ❤️
     </div>
+
+    <!-- GIF appears after YES -->
+    <img
+      id="loveGif"
+      class="gif"
+      src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
+      alt="Love GIF"
+    />
   </div>
 
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const msg = document.getElementById("loveMsg");
+    const gif = document.getElementById("loveGif");
 
-    // Move NO button only when cursor gets close
     document.addEventListener("mousemove", (e) => {
       const rect = noBtn.getBoundingClientRect();
 
-      const distance =
-        Math.hypot(
-          e.clientX - (rect.left + rect.width / 2),
-          e.clientY - (rect.top + rect.height / 2)
-        );
+      const distance = Math.hypot(
+        e.clientX - (rect.left + rect.width / 2),
+        e.clientY - (rect.top + rect.height / 2)
+      );
 
-      // If cursor is close → move button
       if (distance < 120) {
         const x = Math.random() * (window.innerWidth - rect.width);
         const y = Math.random() * (window.innerHeight - rect.height);
@@ -133,7 +134,6 @@
       }
     });
 
-    // Create heart explosion
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
@@ -141,20 +141,19 @@
 
       heart.style.left = Math.random() * window.innerWidth + "px";
       heart.style.top = Math.random() * window.innerHeight + "px";
-      heart.style.fontSize = (20 + Math.random() * 30) + "px";
 
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 2000);
     }
 
-    // YES click
     yesBtn.addEventListener("click", () => {
       msg.style.display = "block";
+      gif.style.display = "block";
       yesBtn.style.display = "none";
       noBtn.style.display = "none";
 
       for (let i = 0; i < 40; i++) {
-        setTimeout(createHeart, i * 50);
+        setTimeout(createHeart, i * 60);
       }
     });
   </script>
