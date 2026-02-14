@@ -62,11 +62,23 @@
       animation: fadeIn 1s ease forwards;
     }
 
+    /* CENTERED GIF */
     .gif {
-      margin-top: 20px;
-      width: 220px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 260px;
       display: none;
-      border-radius: 12px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: pop 0.6s ease forwards;
+      z-index: 5;
+    }
+
+    @keyframes pop {
+      from { transform: translate(-50%, -50%) scale(0.6); opacity: 0; }
+      to   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
     }
 
     @keyframes fadeIn {
@@ -100,15 +112,15 @@
     <div class="message" id="loveMsg">
       Yaaay Iram! You just made me the happiest person alive ❤️
     </div>
-
-    <!-- GIF appears after YES -->
-    <img
-      id="loveGif"
-      class="gif"
-      src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
-      alt="Love GIF"
-    />
   </div>
+
+  <!-- CENTER GIF -->
+  <img
+    id="loveGif"
+    class="gif"
+    src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
+    alt="Love GIF"
+  />
 
   <script>
     const noBtn = document.getElementById("noBtn");
@@ -136,27 +148,3 @@
 
     function createHeart() {
       const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.innerHTML = "❤️";
-
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.top = Math.random() * window.innerHeight + "px";
-
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 2000);
-    }
-
-    yesBtn.addEventListener("click", () => {
-      msg.style.display = "block";
-      gif.style.display = "block";
-      yesBtn.style.display = "none";
-      noBtn.style.display = "none";
-
-      for (let i = 0; i < 40; i++) {
-        setTimeout(createHeart, i * 60);
-      }
-    });
-  </script>
-
-</body>
-</html>
