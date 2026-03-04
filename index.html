@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Event Ticket</title>
+<title>Ticket Release Simulation</title>
 </head>
 
 <body>
@@ -9,14 +9,23 @@
 <button id="ticketBtn">Coming Soon</button>
 
 <script>
-document.getElementById("ticketBtn").addEventListener("click", function() {
 
-    // simulate tickets releasing
-    setTimeout(function() {
-        document.getElementById("ticketBtn").innerText = "Book Now";
-    }, 2000);
+let btn = document.getElementById("ticketBtn");
 
-});
+function toggleButton() {
+
+    if (btn.innerText === "Coming Soon") {
+        btn.innerText = "Book Now";
+    } 
+    else {
+        btn.innerText = "Coming Soon";
+    }
+
+}
+
+// change every 30 seconds
+setInterval(toggleButton, 30000);
+
 </script>
 
 </body>
